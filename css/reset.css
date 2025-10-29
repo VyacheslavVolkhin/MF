@@ -84,7 +84,7 @@ video {
   border: 0;
   font-size: 100%;
   vertical-align: baseline;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 body {
@@ -162,11 +162,12 @@ button,
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     -webkit-transition: all ease 0.3s;
     transition: all ease 0.3s;
     text-decoration: none;
 }
+
 select,
 input[type="text"],
 input[type="password"],
@@ -187,7 +188,7 @@ textarea {
   display: block;
   width: 100%;
   outline: none;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-appearance: none;
 }
 select::-ms-clear,
@@ -212,6 +213,32 @@ textarea::-ms-clear {
 textarea {
   overflow: auto;
   resize: none;
+}
+input[list]::-webkit-calendar-picker-indicator {
+    display: none;
+    opacity: 0;
+    pointer-events: none
+}
+
+input[list] {
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 5px;
+    padding-right: .5rem
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	display: none;
+	margin: 0;
+}
+input[type=number]{
+	-moz-appearance: textfield;
 }
 blockquote,
 q {

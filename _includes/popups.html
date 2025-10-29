@@ -1,0 +1,75 @@
+<!--popup-outer-box-->
+<div class="popup-outer-box" id="popup-order">
+	<div class="popup-box">
+		<div class="popup-content-wrap">
+			<!--title-box-->
+			<div class="title-box">
+				<div class="page-title section-title">Оставить заявку</div>
+				<a href="" class="btn btn-popup-close btn-action-ico ico-close js-popup-close"></a>
+			</div>
+			<!--/title-box-->
+			<!--form-box-->
+			<form action="/" class="form-box">
+				<div class="frm-row">
+					<div class="frm-field field-half">
+						<div class="frm-field-input">
+							<div class="field-input-title">имя</div>
+							<input type="text" class="form-input" placeholder="Введите имя">
+						</div>
+					</div>
+					<div class="frm-field field-half">
+						<div class="frm-field-input">
+							<div class="field-input-title">телефон</div>
+							<input type="tel" class="form-input" placeholder="+7 980 000 00 00">
+						</div>
+					</div>
+				</div>
+				<div class="frm-row">
+					<div class="frm-field">
+						<div class="frm-field-input">
+							<div class="field-input-title">комментарий</div>
+							<textarea class="form-input" placeholder="Сообщение текстовое"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="frm-row-submit">
+					<div class="frm-field field-half">
+						<button type="submit" class="btn button-arrow">
+							<div class="button-title">Оставить заявку</div>
+						</button>
+					</div>
+					<div class="frm-field field-half">
+						<div class="frm-select">
+							<input type="checkbox" id="popupform" checked>
+							<label for="popupform">Отправляя данную форму, я&nbsp;соглашаюсь с&nbsp;<a href="" class="link-main">Политикой конфиденциальности</a></label>
+						</div>
+					</div>
+				</div>
+			</form>
+			<!--/form-box-->
+		</div>
+	</div>
+</div><!--/popup-outer-box-->
+
+
+
+
+<!--popup-outer-box-->
+<div class="popup-outer-box popup-cookie" id="cookie_notification">
+	<div class="popup-box">
+		<div class="popup-content-wrap">
+			<div class="popup-cookie-box">
+				<div class="info-inner-wrap">
+					<p>Мы используем файлы cookie для обеспечения корректной работы сайта, аналитики и повышения удобства.  <br>Продолжая использовать сайт, вы соглашаетесь на использование файлов cookie. <br><a href="" class="link-main">Политика конфиденциальности и обработки персональных данных</a></p>
+				</div>
+				<div class="action-inner-wrap">
+					<div class="btn button-medium button-arrow cookie_accept">
+						<div class="button-title">Принять</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--/popup-outer-box-->
+<script>function checkCookies(){let cookieDate = localStorage.getItem('cookieDate');let cookieNotification = document.getElementById('cookie_notification');let cookieBtn = cookieNotification.querySelector('.cookie_accept');if( !cookieDate || (+cookieDate + 31536000000) < Date.now() ){cookieNotification.classList.add('active');}cookieBtn.addEventListener('click', function(){localStorage.setItem( 'cookieDate', Date.now() );cookieNotification.classList.remove('active');})}checkCookies();</script>
