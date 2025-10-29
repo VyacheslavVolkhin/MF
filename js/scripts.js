@@ -12,39 +12,44 @@ document.addEventListener("DOMContentLoaded", function() {
 	const timeInput = document.querySelector('.js-time-input');
 	const popupBlockTime = document.querySelector('.js-time-inner');
 
-	const timePicker = flatpickr(popupBlockTime, {
-		inline: true,
-		enableTime: true,      // Включаем выбор времени
-		noCalendar: true,      // Скрываем календарь (только время)
-		dateFormat: "H:i",     // Формат только время
-		time_24hr: true,       // 24-часовой формат
-		locale: "ru",
-		
-		// Дополнительные настройки времени
-		minuteIncrement: 5,    // Шаг 5 минут
-		defaultHour: 12,       // Час по умолчанию
-		defaultMinute: 0,      // Минуты по умолчанию
-		
-		// Можно ограничить временной диапазон
-		// minTime: "08:00",
-		// maxTime: "20:00",
-		
-		onChange: function(selectedDates, dateStr, instance) {
-			timeInput.value = dateStr;
-		}
-	});
+	if (dateInput) {
+		const calendar = flatpickr(popupBlockDate, {
+			inline: true,
+			dateFormat: "d.m.Y",
+			locale: "ru",
+			yearSelector: false,
+			static: true,
+			monthSelectorType: "static",
+			onChange: function(selectedDates, dateStr, instance) {
+				dateInput.value = dateStr;
+			}
+		});
+	}
 
-	const calendar = flatpickr(popupBlockDate, {
-		inline: true,
-		dateFormat: "d.m.Y",
-		locale: "ru",
-		yearSelector: false,
-		static: true,
-    	monthSelectorType: "static",
-		onChange: function(selectedDates, dateStr, instance) {
-			dateInput.value = dateStr;
-		}
-	});
+	if (timeInput) {
+		const timePicker = flatpickr(popupBlockTime, {
+			inline: true,
+			enableTime: true,      // Включаем выбор времени
+			noCalendar: true,      // Скрываем календарь (только время)
+			dateFormat: "H:i",     // Формат только время
+			time_24hr: true,       // 24-часовой формат
+			locale: "ru",
+			
+			// Дополнительные настройки времени
+			minuteIncrement: 5,    // Шаг 5 минут
+			defaultHour: 12,       // Час по умолчанию
+			defaultMinute: 0,      // Минуты по умолчанию
+			
+			// Можно ограничить временной диапазон
+			// minTime: "08:00",
+			// maxTime: "20:00",
+			
+			onChange: function(selectedDates, dateStr, instance) {
+				timeInput.value = dateStr;
+			}
+		});
+	}
+
 
 
 	// filter actions
