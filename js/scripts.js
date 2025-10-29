@@ -29,21 +29,17 @@ document.addEventListener("DOMContentLoaded", function() {
 	if (timeInput) {
 		const timePicker = flatpickr(popupBlockTime, {
 			inline: true,
-			enableTime: true,      // Включаем выбор времени
-			noCalendar: true,      // Скрываем календарь (только время)
-			dateFormat: "H:i",     // Формат только время
-			time_24hr: true,       // 24-часовой формат
+			enableTime: true,      
+			noCalendar: true,      
+			dateFormat: "H:i",     
+			time_24hr: true,       
 			locale: "ru",
-			
-			// Дополнительные настройки времени
-			minuteIncrement: 5,    // Шаг 5 минут
-			defaultHour: 12,       // Час по умолчанию
-			defaultMinute: 0,      // Минуты по умолчанию
-			
+			minuteIncrement: 5,    
+			defaultHour: 12,       
+			defaultMinute: 0,      
 			// Можно ограничить временной диапазон
 			// minTime: "08:00",
 			// maxTime: "20:00",
-			
 			onChange: function(selectedDates, dateStr, instance) {
 				timeInput.value = dateStr;
 			}
