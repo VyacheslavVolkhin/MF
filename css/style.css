@@ -17,7 +17,7 @@
   --mainRadius: 24px;
   --mainRadius: 2.4rem;
   --icoSize: 24px;
-  --min: 360px;
+  --min: 320px;
   --max: 1520px;
   --paddingContainer: 15px;
   --filterBlack: brightness(0) grayscale(1);
@@ -465,6 +465,12 @@ table thead td:after {
     font-size: 7px;
   }
 }
+@media (max-width: 359px) {
+  :root {
+    --paddingContainer: 8px;
+    font-size: 6px;
+  }
+}
 @media (min-width: 1024px) {
   :root {
     --paddingContainer: 30px;
@@ -551,6 +557,7 @@ html.with-fancybox body.hide-scrollbar {
   display: flex;
   -ms-flex-direction: column;
       flex-direction: column;
+  overflow: hidden;
 }
 .wrap > .cnt-section {
   -ms-flex-negative: 0;
@@ -932,6 +939,10 @@ html.with-fancybox body.hide-scrollbar {
   .header {
     position: relative;
   }
+  .header .inner-wrap {
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+  }
   .header:has(.btn-action.active) .elm-overlay {
     display: block;
   }
@@ -1100,9 +1111,14 @@ html.with-fancybox body.hide-scrollbar {
     width: 50%;
   }
 }
+@media (max-width: 359px) {
+  .header .logo {
+    width: 140px;
+  }
+}
 @media (min-width: 1024px) {
-  .wrap {
-    overflow-x: visible;
+  .wrap:has(.side-total-box) {
+    overflow: visible;
   }
   .header:has(.btn-action.active) .elm-overlay {
     display: block;
@@ -2647,6 +2663,10 @@ html.with-fancybox body.hide-scrollbar {
 .catalog-actions-box .filter-wrap .btn:hover .button-ico {
   filter: none;
 }
+.catalog-actions-box .frm-field-select-list .popup-content-block {
+  left: auto;
+  right: 0;
+}
 .tiles-box {
   margin-bottom: var(--sectionMargin);
   position: relative;
@@ -3308,6 +3328,15 @@ html.with-fancybox body.hide-scrollbar {
     width: 100%;
     -ms-flex-negative: 0;
         flex-shrink: 0;
+  }
+  .info-card-box {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .info-card-box .info-inner-wrap,
+  .info-card-box .photos-inner-wrap {
+    padding-left: 0;
+    padding-right: 0;
   }
   @supports (display: contents) {
     .info-card-box {
@@ -3978,6 +4007,70 @@ select.form-input:required:invalid {
 /* ----------------------------------- *\
 			forms elements styles
 \* ----------------------------------- */
+.frm-field-select-list {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.frm-field-select-list .popup-content-block {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  max-width: calc(100dvw - var(--paddingContainer) - var(--paddingContainer));
+  z-index: 20;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(97, 97, 97, 0.18), 0 4px 8px 0 rgba(97, 97, 97, 0.18);
+  margin-top: 10px;
+  opacity: 1;
+  padding: 15px 0;
+  min-width: 100%;
+  width: auto;
+  float: left;
+}
+.frm-field-select-list .btn-popup {
+  font-size: 14px;
+  line-height: 24px;
+  padding: 0 30px 0 0;
+  font-weight: bold;
+  display: block;
+  position: relative;
+  white-space: nowrap;
+}
+.frm-field-select-list .btn-popup:hover {
+  color: var(--clr-base);
+}
+.frm-field-select-list .btn-popup:before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  background: url(../img/icons/arrow-select.svg) center no-repeat;
+  background-size: 16px auto;
+  top: 50%;
+  right: 0;
+  margin-top: -11px;
+  filter: none;
+}
+.frm-field-select-list .btn-menu {
+  display: block;
+  position: relative;
+  font-weight: 400;
+  padding: 10px 15px;
+  line-height: 1.1;
+  height: auto;
+  white-space: nowrap;
+  color: var(--clr-base);
+  transition: all ease 0.2s;
+}
+.frm-field-select-list .btn-menu:hover,
+.frm-field-select-list .btn-menu.active {
+  background: var(--clr-att);
+  color: #fff;
+}
 .frm-field-select {
   display: block;
   position: relative;

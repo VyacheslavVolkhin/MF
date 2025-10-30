@@ -18,7 +18,7 @@
 	--mainRadius: 2.4rem;
 	--icoSize: 24px;
 
-	--min: 360px;
+	--min: 320px;
 	--max: 1520px;
     
     --paddingContainer: 15px;
@@ -390,6 +390,12 @@ table {
     :root {
         font-size: 7px;
     }
+}
+@media (max-width: 359px) {
+	:root {
+		--paddingContainer: 8px;
+		font-size: 6px;
+	}
 }
 @media (min-width: 1024px) {
     :root {

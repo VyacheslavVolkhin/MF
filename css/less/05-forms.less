@@ -1,6 +1,66 @@
 /* ----------------------------------- *\
 			forms elements styles
 \* ----------------------------------- */
+.frm-field-select-list {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	flex-shrink: 0;
+	.popup-content-block {
+		display: none;
+		position: absolute;
+		top: 100%;left: 0;
+		max-width: calc(100dvw - var(--paddingContainer) - var(--paddingContainer));
+		z-index: 20;
+		background: #fff;
+		box-shadow: 0 2px 4px 0 rgba(97, 97, 97, 0.18), 0 4px 8px 0 rgba(97, 97, 97, 0.18);
+		margin-top: 10px;
+		opacity: 1;
+		padding: 15px 0;
+		min-width: 100%;
+		width: auto;
+		float: left;
+	}
+	.btn-popup {
+		font-size: 14px;
+		line-height: 24px;
+		padding: 0 30px 0 0;
+		font-weight: bold;
+		display: block;
+		position: relative;
+		white-space: nowrap;
+		&:hover {
+			color: var(--clr-base);
+		}
+		&:before {
+			content: "";
+			display: block;
+			width: 24px;
+			height: 24px;
+			position: absolute;
+			background: url(../img/icons/arrow-select.svg) center no-repeat;
+			background-size: 16px auto;
+			top: 50%;right: 0;
+			margin-top: -11px;
+			filter: none;
+		}
+	}
+	.btn-menu {
+		display: block;
+		position: relative;
+		font-weight: 400;
+		padding: 10px 15px;
+		line-height: 1.1;
+		height: auto;
+		white-space: nowrap;
+		color: var(--clr-base);
+		transition: all ease 0.2s;
+		&:hover, &.active {
+			background: var(--clr-att);
+			color: #fff;
+		}
+	}
+}
 .frm-field-select {
 	display: block;
 	position: relative;

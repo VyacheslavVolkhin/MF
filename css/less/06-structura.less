@@ -72,6 +72,7 @@ html.with-fancybox body.hide-scrollbar {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
 	&>.cnt-section {
 		flex-shrink: 0;
 	}
@@ -390,6 +391,9 @@ html.with-fancybox body.hide-scrollbar {
 	
 	.header {
 		position: relative;
+		.inner-wrap {
+			flex-wrap: nowrap;
+		}
 		&:has(.btn-action.active) {
 			.elm-overlay {
 				display: block;
@@ -551,9 +555,18 @@ html.with-fancybox body.hide-scrollbar {
 		}
 	}
 }
+@media (max-width: 359px) {
+	.header {
+		.logo {
+			width: 140px;
+		}
+	}
+}
 @media (min-width: 1024px) {
 	.wrap {
-		overflow-x: visible;
+		&:has(.side-total-box) {
+			overflow: visible;
+		}
 	}
 	.header {
 		&:has(.btn-action.active) {
