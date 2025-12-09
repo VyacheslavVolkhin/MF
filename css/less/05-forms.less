@@ -126,13 +126,28 @@
 		padding: 0;
 		min-width: 0;
 		border: none;
+		overflow: visible;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: auto;
+		height: auto;
+		border-radius: 0;
+		background: none;
 		&.active {
 			background-color: var(--clr-base);
+			background: none;
+			&:after {
+				background-color: var(--clr-base);
+			}
 			&:before {
 				transform: translate(-50%, -50%) rotate(180deg);
+				transform: rotate(180deg);
 			}
 		}
-		&:before {
+		&:before, &:after {
 			content: "";
 			display: block;
 			width: 63%;
@@ -143,8 +158,24 @@
 			background: url(../img/icons/arrow-toggle.svg) center no-repeat;
 			background-size: 100% auto;
 			transform: translate(-50%, -50%);
-			filter: var(--filterWhite);
 			transition: all ease 0.2s;
+			position: absolute;
+			transform: none;
+			top: 50%;right: 0;left: auto;
+			margin-top: -19px;
+			z-index: 3;
+			display: block;
+			width: 38px;
+			height: 38px;
+		}
+		&:before {
+			z-index: 4;
+			background-size: 63% auto;
+			filter: var(--filterWhite);
+		}
+		&:after {
+			border-radius: 50%;
+			background: var(--clr-att);
 		}
 	}
 	
@@ -810,6 +841,13 @@
 		.btn-popup {
 			width: 30px;height: 30px;
 			margin-top: -15px;
+			width: auto;
+			height: auto;
+			margin: 0;
+			&:before, &:after {
+				width: 30px;height: 30px;
+				margin-top: -15px;
+			}
 		}
 	}
 	.frm-select-button {

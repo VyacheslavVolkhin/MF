@@ -6,14 +6,12 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 
-	//datepicker
-	const dateInput = document.querySelector('.js-date-input');
-	const popupBlockDate = document.querySelector('.js-date-inner');
-	const timeInput = document.querySelector('.js-time-input');
-	const popupBlockTime = document.querySelector('.js-time-inner');
-
-	if (dateInput) {
-		const calendar = flatpickr(popupBlockDate, {
+	// datepicker
+	const dateInputs = document.querySelectorAll('.js-date-input');
+	dateInputs.forEach(dateInput => {
+		const popupBlockDate = dateInput.closest('.js-popup-wrap')?.querySelector('.js-date-inner');
+		if (popupBlockDate) {
+			const calendar = flatpickr(popupBlockDate, {
 			inline: true,
 			dateFormat: "d.m.Y",
 			locale: "ru",
@@ -23,11 +21,16 @@ document.addEventListener("DOMContentLoaded", function() {
 			onChange: function(selectedDates, dateStr, instance) {
 				dateInput.value = dateStr;
 			}
-		});
-	}
+			});
+		}
+	});
 
-	if (timeInput) {
-		const timePicker = flatpickr(popupBlockTime, {
+	// timepicker
+	const timeInputs = document.querySelectorAll('.js-time-input');
+	timeInputs.forEach(timeInput => {
+		const popupBlockTime = timeInput.closest('.js-popup-wrap')?.querySelector('.js-time-inner');
+		if (popupBlockTime) {
+			const timePicker = flatpickr(popupBlockTime, {
 			inline: true,
 			enableTime: true,      
 			noCalendar: true,      
@@ -37,14 +40,12 @@ document.addEventListener("DOMContentLoaded", function() {
 			minuteIncrement: 5,    
 			defaultHour: 12,       
 			defaultMinute: 0,      
-			// Можно ограничить временной диапазон
-			// minTime: "08:00",
-			// maxTime: "20:00",
 			onChange: function(selectedDates, dateStr, instance) {
 				timeInput.value = dateStr;
 			}
-		});
-	}
+			});
+		}
+	});
 
 
 
