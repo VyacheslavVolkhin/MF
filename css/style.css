@@ -2215,6 +2215,9 @@ html.with-fancybox body.hide-scrollbar {
   z-index: 10;
   position: relative;
 }
+.top-slider-box .slider-photos-thumbs {
+  display: none;
+}
 .top-slider-box .bg-full-wrap:after {
   content: "";
   display: block;
@@ -2236,8 +2239,8 @@ html.with-fancybox body.hide-scrollbar {
   height: 100%;
 }
 .top-slider-box .inner-wrap {
-  padding-top: 335px;
-  padding-top: 33.5rem;
+  padding-top: 60px;
+  padding-top: 6rem;
   padding-bottom: 60px;
   padding-bottom: 6rem;
   min-height: 860px;
@@ -3283,7 +3286,7 @@ html.with-fancybox body.hide-scrollbar {
 }
 @media (max-width: 1023px) {
   .top-slider-box .inner-wrap {
-    padding-top: 154px;
+    padding-top: 100px;
     padding-bottom: 100px;
     min-height: 0;
   }
@@ -3498,6 +3501,14 @@ html.with-fancybox body.hide-scrollbar {
   }
 }
 @media (min-width: 1024px) {
+  .top-slider-box .inner-wrap {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+  }
   .tiles-reviews-slider-box .slider-pagination,
   .tiles-catalog-slider-box .slider-pagination,
   .tiles-main-catalog-slider-box .slider-pagination,
