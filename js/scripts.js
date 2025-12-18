@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", function() {
 		//settings
 	});
 
+	//video autoplay
+	const video = document.querySelector('video');
+	if (video) {
+		const playPromise = video.play();
+	}
+
 
 	// datepicker
 	const dateInputs = document.querySelectorAll('.js-date-input');
