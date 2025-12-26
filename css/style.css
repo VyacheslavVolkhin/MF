@@ -4229,9 +4229,6 @@ select.form-input:required:invalid {
   display: block;
   position: relative;
 }
-.frm-field-select #delivery-time-hint {
-  display: none;
-}
 .frm-field-select li:has(input[disabled]) {
   display: none;
 }
