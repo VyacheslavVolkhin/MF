@@ -323,7 +323,7 @@ function addStyles() {
 
 // Сброс выбранных времен при смене даты
 function resetTimeSelections() {
-  console.log('Смена даты, сбрасываем выбранное время');
+  //console.log('Смена даты, сбрасываем выбранное время');
   
   // Сбрасываем выбранное время "от"
   var fromInput = document.getElementById('time-from');
@@ -364,7 +364,7 @@ function setupDateListener() {
     
     // Проверяем, изменилась ли дата
     if (newDate !== previousDate) {
-      console.log('Дата изменилась с', previousDate, 'на', newDate);
+      //console.log('Дата изменилась с', previousDate, 'на', newDate);
       
       // Обновляем даты
       previousDate = newDate;
