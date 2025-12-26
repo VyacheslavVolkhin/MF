@@ -25,10 +25,9 @@ var CONFIG = {
 // ============================
 var selectedFromTime = null;
 var selectedDate = null;
+var previousDate = null; // Добавим для отслеживания предыдущей даты
 var timesList = [];
 var currentConstraints = null;
-var lastDateValue = '';
-var dateCheckInterval = null;
 
 // ============================
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
@@ -37,6 +36,39 @@ var dateCheckInterval = null;
 // Форматирование числа в двузначный формат
 function formatNumber(num) {
   return num < 10 ? '0' + num : num.toString();
+}
+
+// Преобразование даты в формат YYYY-MM-DD (универсальный)
+function normalizeDate(dateStr) {
+  if (!dateStr) return getTodayDate();
+  
+  // Если дата уже в формате YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+  
+  // Если дата в формате DD.MM.YYYY (flatpickr)
+  if (/^\d{2}\.\d{2}\.\d{4}$/.test(dateStr)) {
+    var parts = dateStr.split('.');
+    return parts[2] + '-' + parts[1] + '-' + parts[0];
+  }
+  
+  // Если дата в формате DD/MM/YYYY
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+    var parts = dateStr.split('/');
+    return parts[2] + '-' + parts[1] + '-' + parts[0];
+  }
+  
+  // Пытаемся создать Date объект
+  var date = new Date(dateStr);
+  if (!isNaN(date.getTime())) {
+    return date.getFullYear() + '-' + 
+           formatNumber(date.getMonth() + 1) + '-' + 
+           formatNumber(date.getDate());
+  }
+  
+  // Если ничего не подошло, возвращаем сегодня
+  return getTodayDate();
 }
 
 // Получение сегодняшней даты в формате YYYY-MM-DD
@@ -159,10 +191,8 @@ function isTimeAvailable(timeObj, selectedDate, isToField) {
     return false;
   }
   
-  // Если дата не выбрана, считаем что сегодня
-  if (!selectedDate) {
-    selectedDate = getTodayDate();
-  }
+  // Нормализуем дату
+  selectedDate = normalizeDate(selectedDate);
   
   var now = new Date();
   var selected = new Date(selectedDate);
@@ -291,39 +321,75 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
-// Отслеживание изменений в поле даты с помощью polling
+// Сброс выбранных времен при смене даты
+function resetTimeSelections() {
+  console.log('Смена даты, сбрасываем выбранное время');
+  
+  // Сбрасываем выбранное время "от"
+  var fromInput = document.getElementById('time-from');
+  if (fromInput) {
+    fromInput.value = '';
+  }
+  
+  // Сбрасываем выбранное время "до"
+  var toInput = document.getElementById('time-to');
+  if (toInput) {
+    toInput.value = '';
+  }
+  
+  // Сбрасываем выбранные радиокнопки
+  document.querySelectorAll('.frm-select-time input[type="radio"]:checked').forEach(function(radio) {
+    radio.checked = false;
+  });
+  
+  // Сбрасываем глобальную переменную
+  selectedFromTime = null;
+  
+  // Обновляем поле "до" (оно будет заблокировано)
+  updateToTimeOptions();
+}
+
+// Отслеживание изменений в поле даты
 function setupDateListener() {
   var dateInput = document.getElementById('time');
   if (!dateInput) return;
   
-  // Запоминаем начальное значение
-  lastDateValue = dateInput.value || getTodayDate();
-  selectedDate = dateInput.value || getTodayDate();
+  // Инициализируем selectedDate и previousDate
+  selectedDate = normalizeDate(dateInput.value);
+  previousDate = selectedDate;
   
-  // Проверяем каждые 300мс, изменилось ли значение
-  if (dateCheckInterval) {
-    clearInterval(dateCheckInterval);
-  }
-  
-  dateCheckInterval = setInterval(function() {
-    var currentValue = dateInput.value || getTodayDate();
-    if (currentValue !== lastDateValue) {
-      lastDateValue = currentValue;
-      selectedDate = currentValue;
+  // Функция-обработчик изменения даты
+  function handleDateChange() {
+    var newDate = normalizeDate(dateInput.value);
+    
+    // Проверяем, изменилась ли дата
+    if (newDate !== previousDate) {
+      console.log('Дата изменилась с', previousDate, 'на', newDate);
+      
+      // Обновляем даты
+      previousDate = newDate;
+      selectedDate = newDate;
+      
+      // Сбрасываем выбранные времена
+      resetTimeSelections();
+      
+      // Пересчитываем доступность
       recalculateTimeAvailability();
     }
-  }, 300);
+  }
   
-  // Также слушаем стандартные события
-  dateInput.addEventListener('change', function() {
-    selectedDate = dateInput.value || getTodayDate();
-    recalculateTimeAvailability();
-  });
+  // Слушаем события
+  dateInput.addEventListener('change', handleDateChange);
+  dateInput.addEventListener('input', handleDateChange);
   
-  dateInput.addEventListener('input', function() {
-    selectedDate = dateInput.value || getTodayDate();
-    recalculateTimeAvailability();
-  });
+  // Также следим за изменениями каждые 500мс (fallback для flatpickr)
+  var lastDateValue = dateInput.value;
+  setInterval(function() {
+    if (dateInput.value !== lastDateValue) {
+      lastDateValue = dateInput.value;
+      handleDateChange();
+    }
+  }, 500);
 }
 
 // Пересчет доступности времени
@@ -340,11 +406,6 @@ function recalculateTimeAvailability() {
   
   // Обновляем UI
   updateFromTimeOptions();
-  
-  // Если выбрано время "от", обновляем "до"
-  if (selectedFromTime) {
-    updateToTimeOptions();
-  }
   
   // Обновляем подсказку
   updateTimeHint();
@@ -411,7 +472,7 @@ function updateFromTimeOptions() {
   if (!popupWrap) return;
   
   var menu = popupWrap.querySelector('.menu');
-  if (!menu) return;
+  if (!menu || menu.children.length === 0) return;
   
   var timeElements = menu.querySelectorAll('.frm-select-time');
   var anyAvailable = false;
@@ -441,16 +502,8 @@ function updateFromTimeOptions() {
       element.classList.add('disabled');
       label.classList.add('disabled');
       
-      if (radio.checked) {
-        radio.checked = false;
-        fromInput.value = '';
-        selectedFromTime = null;
-        
-        var toInput = document.getElementById('time-to');
-        if (toInput) {
-          toInput.value = '';
-        }
-      }
+      // Гарантируем, что радиокнопка не выбрана
+      radio.checked = false;
     }
   });
   
@@ -468,7 +521,7 @@ function updateToTimeOptions() {
   if (!popupWrap) return;
   
   var menu = popupWrap.querySelector('.menu');
-  if (!menu) return;
+  if (!menu || menu.children.length === 0) return;
   
   // Удаляем старое сообщение
   var oldMessage = menu.querySelector('.no-time-message, .select-time-first');
@@ -517,10 +570,8 @@ function updateToTimeOptions() {
       element.classList.add('disabled');
       label.classList.add('disabled');
       
-      if (radio.checked) {
-        radio.checked = false;
-        toInput.value = '';
-      }
+      // Гарантируем, что радиокнопка не выбрана
+      radio.checked = false;
     }
   });
   
@@ -541,13 +592,8 @@ function blockAllToOptions(menu) {
     element.classList.add('disabled');
     label.classList.add('disabled');
     
-    if (radio.checked) {
-      radio.checked = false;
-      var toInput = document.getElementById('time-to');
-      if (toInput) {
-        toInput.value = '';
-      }
-    }
+    // Гарантируем, что радиокнопка не выбрана
+    radio.checked = false;
   });
 }
 
@@ -622,12 +668,11 @@ function showNoTimeMessage(menu, type) {
 function createTimeOptions() {
   generateTimes();
   
-  // При загрузке всегда считаем, что выбрана сегодняшняя дата
+  // При загрузке считаем, что выбрана сегодняшняя дата
   selectedDate = getTodayDate();
+  previousDate = selectedDate;
   
-  // Пересчитываем доступность для сегодняшней даты
-  recalculateTimeAvailability();
-  
+  // Создаем элементы для обоих полей
   ['from', 'to'].forEach(function(type) {
     var inputId = 'time-' + type;
     var input = document.getElementById(inputId);
@@ -639,8 +684,10 @@ function createTimeOptions() {
     var menu = popupWrap.querySelector('.menu');
     if (!menu) return;
     
+    // Очищаем меню
     menu.innerHTML = '';
     
+    // Создаем элементы времени
     timesList.forEach(function(timeObj, index) {
       var num = index + 1;
       var itemId = inputId + (num < 10 ? '0' + num : num);
@@ -655,6 +702,7 @@ function createTimeOptions() {
       menu.appendChild(li);
     });
     
+    // Обработчик клика
     menu.addEventListener('click', function(e) {
       var radio = e.target.closest('input[type="radio"]');
       if (radio && !radio.disabled) {
@@ -667,6 +715,9 @@ function createTimeOptions() {
       }
     });
   });
+  
+  // Пересчитываем доступность
+  recalculateTimeAvailability();
   
   // Блокируем поле "до" изначально
   var toMenu = document.querySelector('#time-to')?.closest('.js-popup-wrap')?.querySelector('.menu');
@@ -700,10 +751,3 @@ if (document.readyState === 'loading') {
 } else {
   initTimeSelectors();
 }
-
-// Очистка интервала при закрытии страницы
-window.addEventListener('beforeunload', function() {
-  if (dateCheckInterval) {
-    clearInterval(dateCheckInterval);
-  }
-});
