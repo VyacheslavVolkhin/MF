@@ -12,16 +12,25 @@ document.addEventListener("DOMContentLoaded", function() {
 	dateInputs.forEach(dateInput => {
 		const popupBlockDate = dateInput.closest('.js-popup-wrap')?.querySelector('.js-date-inner');
 		if (popupBlockDate) {
-			const calendar = flatpickr(popupBlockDate, {
-			inline: true,
-			dateFormat: "d.m.Y",
-			locale: "ru",
-			yearSelector: false,
-			static: true,
-			monthSelectorType: "static",
-			onChange: function(selectedDates, dateStr, instance) {
-				dateInput.value = dateStr;
+			// Устанавливаем сегодняшнюю дату в input
+			if (!dateInput.value) {
+				const today = new Date();
+				const formattedDate = `${today.getDate().toString().padStart(2, '0')}.${(today.getMonth() + 1).toString().padStart(2, '0')}.${today.getFullYear()}`;
+				dateInput.value = formattedDate;
 			}
+			
+			const calendar = flatpickr(popupBlockDate, {
+				inline: true,
+				dateFormat: "d.m.Y",
+				locale: "ru",
+				yearSelector: false,
+				static: true,
+				monthSelectorType: "static",
+				defaultDate: dateInput.value || "today", // Используем значение input или сегодня
+				minDate: "today", 
+				onChange: function(selectedDates, dateStr, instance) {
+					dateInput.value = dateStr;
+				}
 			});
 		}
 	});

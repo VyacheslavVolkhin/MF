@@ -235,7 +235,7 @@
 									<div class="frm-row">
 										<div class="frm-field">
 											<div class="frm-field-select js-popup-wrap">
-												<input type="text" class="form-input js-date-input" placeholder="Дата *" disabled>
+												<input type="text" class="form-input js-date-input" placeholder="Дата *" disabled id="time">
 												<a href="" class="btn-popup js-btn-popup-toggle"></a>
 												<div class="popup-content-block js-popup-block">
 													<div class="popup-close-wrap">
@@ -260,7 +260,7 @@
 									<div class="frm-row">
 										<div class="frm-field field-half">
 											<div class="frm-field-select js-popup-wrap">
-												<input type="text" class="form-input js-time-input" placeholder="Доставка с *" disabled>
+												<input type="text" class="form-input" placeholder="Доставка с *" disabled id="time-from">
 												<a href="" class="btn-popup js-btn-popup-toggle"></a>
 												<div class="popup-content-block js-popup-block">
 													<div class="popup-close-wrap">
@@ -270,8 +270,8 @@
 															</div>
 														</a>
 													</div>
-													<div class="frm-datepicker">
-														<div class="js-time-inner"></div>
+													<div class="frm-field-time">
+														<ul class="menu"></ul>
 													</div>
 													<div class="popup-apply-wrap">
 														<a href="" class="btn button-medium button-arrow js-btn-popup-close">
@@ -283,7 +283,7 @@
 										</div>
 										<div class="frm-field field-half">
 											<div class="frm-field-select js-popup-wrap">
-												<input type="text" class="form-input js-time-input" placeholder="Доставка до *" disabled>
+												<input type="text" class="form-input" placeholder="Доставка до *" disabled id="time-to">
 												<a href="" class="btn-popup js-btn-popup-toggle"></a>
 												<div class="popup-content-block js-popup-block">
 													<div class="popup-close-wrap">
@@ -293,8 +293,8 @@
 															</div>
 														</a>
 													</div>
-													<div class="frm-datepicker">
-														<div class="js-time-inner"></div>
+													<div class="frm-field-time">
+														<ul class="menu"></ul>
 													</div>
 													<div class="popup-apply-wrap">
 														<a href="" class="btn button-medium button-arrow js-btn-popup-close">

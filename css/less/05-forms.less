@@ -64,6 +64,14 @@
 .frm-field-select {
 	display: block;
 	position: relative;
+	#delivery-time-hint {
+		display: none;
+	}
+	li {
+		&:has(input[disabled]) {
+			display: none;
+		}
+	}
 	&:has(.active) {
 		[placeholder]::-webkit-input-placeholder {color: var(--clr-att);}
 		[placeholder]:-moz-placeholder {color: var(--clr-att);}
@@ -179,6 +187,20 @@
 		}
 	}
 	
+}
+.frm-field-time {
+	padding: 15px 0;
+	.menu {
+		max-height: 300px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar {
+			width: 0;
+			height: 0;
+		}
+	}
 }
 .frm-datepicker {
 	display: block;
@@ -564,7 +586,7 @@
     display: block;
     width: 100%;
 }
-.frm-select, .frm-select-button, .frm-select-toggle {
+.frm-select, .frm-select-button, .frm-select-toggle, .frm-select-time {
 	position: relative;
 	display: block;
 	overflow: hidden;
@@ -599,6 +621,22 @@
 		&:after {
 			opacity: 0;
 		}
+	}
+}
+.frm-select-time {
+	font-size: 20px;
+	line-height: 24px;
+	text-align: center;
+	white-space: nowrap;
+	label {
+		display: block;
+		padding: 10px 0;
+		&:hover {
+			background: #f5f5f5;
+		}
+	}
+	input:checked~label {
+		background: #f5f5f5;
 	}
 }
 .frm-select-toggle {

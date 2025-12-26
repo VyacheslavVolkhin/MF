@@ -4229,6 +4229,12 @@ select.form-input:required:invalid {
   display: block;
   position: relative;
 }
+.frm-field-select #delivery-time-hint {
+  display: none;
+}
+.frm-field-select li:has(input[disabled]) {
+  display: none;
+}
 .frm-field-select:has(.active) [placeholder]::-webkit-input-placeholder {
   color: var(--clr-att);
 }
@@ -4354,6 +4360,20 @@ select.form-input:required:invalid {
 .frm-field-select .btn-popup:after {
   border-radius: 50%;
   background: var(--clr-att);
+}
+.frm-field-time {
+  padding: 15px 0;
+}
+.frm-field-time .menu {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.frm-field-time .menu::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 .frm-datepicker {
   display: block;
@@ -4794,7 +4814,8 @@ select.form-input:required:invalid {
 }
 .frm-select,
 .frm-select-button,
-.frm-select-toggle {
+.frm-select-toggle,
+.frm-select-time {
   position: relative;
   display: block;
   overflow: hidden;
@@ -4805,7 +4826,8 @@ select.form-input:required:invalid {
 }
 .frm-select input,
 .frm-select-button input,
-.frm-select-toggle input {
+.frm-select-toggle input,
+.frm-select-time input {
   display: block;
   position: absolute;
   top: 0;
@@ -4818,12 +4840,14 @@ select.form-input:required:invalid {
 }
 .frm-select input:checked ~ label:after,
 .frm-select-button input:checked ~ label:after,
-.frm-select-toggle input:checked ~ label:after {
+.frm-select-toggle input:checked ~ label:after,
+.frm-select-time input:checked ~ label:after {
   opacity: 1;
 }
 .frm-select label,
 .frm-select-button label,
-.frm-select-toggle label {
+.frm-select-toggle label,
+.frm-select-time label {
   display: block;
   position: relative;
   cursor: pointer;
@@ -4831,17 +4855,36 @@ select.form-input:required:invalid {
 .frm-select label:before,
 .frm-select-button label:before,
 .frm-select-toggle label:before,
+.frm-select-time label:before,
 .frm-select label:after,
 .frm-select-button label:after,
-.frm-select-toggle label:after {
+.frm-select-toggle label:after,
+.frm-select-time label:after {
   content: "";
   display: block;
   position: absolute;
 }
 .frm-select label:after,
 .frm-select-button label:after,
-.frm-select-toggle label:after {
+.frm-select-toggle label:after,
+.frm-select-time label:after {
   opacity: 0;
+}
+.frm-select-time {
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  white-space: nowrap;
+}
+.frm-select-time label {
+  display: block;
+  padding: 10px 0;
+}
+.frm-select-time label:hover {
+  background: #f5f5f5;
+}
+.frm-select-time input:checked ~ label {
+  background: #f5f5f5;
 }
 .frm-select-toggle {
   display: -ms-flexbox;
